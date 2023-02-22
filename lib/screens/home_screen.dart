@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 
+import '../models/road.dart';
+import 'road_screen.dart';
+
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
 
-  final items = [];
+  final items = [Road()];
 
   @override
   Widget build(BuildContext context) {
@@ -30,19 +33,9 @@ class HomeScreen extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => NextScreen()),
+                MaterialPageRoute(builder: (context) => const RoadScreen()),
               );
             },
-          );
-        },
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        label: const Text("Usuario"),
-        icon: const Icon(Icons.add),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const FormScreen()),
           );
         },
       ),
