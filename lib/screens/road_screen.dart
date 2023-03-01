@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 
-class RoadScreen extends StatelessWidget {
-  const RoadScreen({super.key});
+import '../models/road.dart';
 
-//TODO: Video directo?,
+class RoadScreen extends StatelessWidget {
+  final Road road;
+
+  const RoadScreen({super.key, required this.road});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("M30"),
+        title: Text(road.carretera),
       ),
       body: Card(
         margin: const EdgeInsets.all(20.0),
@@ -21,35 +24,35 @@ class RoadScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Column(
-                    children: const [
-                      Text(
-                        "Altitud",
+                    children: [
+                      const Text(
+                        "Afección",
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 17),
                       ),
-                      Text("0m")
-                    ],
-                  ),
-                  Expanded(child: Container()),
-                  Column(
-                    children: const [
-                      Text(
-                        "País",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 17),
-                      ),
-                      Text("ES")
+                      Text(road.afeccion)
                     ],
                   ),
                   Expanded(child: Container()),
                   Column(
                     children: [
                       const Text(
-                        "Estado",
+                        "Problema",
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 17),
                       ),
-                      Text("★★★☆☆",
+                      Text(road.titulo)
+                    ],
+                  ),
+                  Expanded(child: Container()),
+                  Column(
+                    children: [
+                      const Text(
+                        "Nivel",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 17),
+                      ),
+                      Text(road.gravedad,
                           style: TextStyle(
                               color: Colors.orange[900], fontSize: 16))
                     ],
@@ -57,13 +60,22 @@ class RoadScreen extends StatelessWidget {
                 ],
               ),
             ),
-            Image.asset("assets/m30.jpg"),
-            const Padding(
-              padding: EdgeInsets.all(8.0),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 15, 0, 15),
+              child: Image.asset("assets/m30.jpg", scale: 2),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
               child: Text(
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur",
-                style: TextStyle(fontStyle: FontStyle.italic, fontSize: 15),
+                road.detalles,
+                style:
+                    const TextStyle(fontStyle: FontStyle.italic, fontSize: 15),
               ),
+            ),
+            Expanded(child: Container()),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: const Text("Prueba"),
             )
           ],
         ),

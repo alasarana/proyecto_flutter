@@ -17,7 +17,6 @@ class Road {
 
   static List<Road> fromApiResponse(dynamic apiResponse) {
     final List<Road> roads = [];
-    print(apiResponse);
     for (final record in apiResponse['result']['records']) {
       print(record['Carretera']);
       final road = Road(
