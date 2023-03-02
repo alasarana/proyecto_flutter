@@ -46,8 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
               itemBuilder: (context, index) {
                 return ListTile(
                   shape: RoundedRectangleBorder(
-                    side:
-                        BorderSide(color: Colors.deepOrange.shade900, width: 1),
+                    side: BorderSide(width: 1),
                     borderRadius: BorderRadius.circular(5),
                   ),
                   leading: const Icon(
