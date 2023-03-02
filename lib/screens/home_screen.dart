@@ -25,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void loadData() async {
     final url = Uri.parse(
-        'https://datosabiertos.navarra.es/es/api/3/action/datastore_search?resource_id=9323f68f-9c8f-47e1-884c-d6985b957606&limit=2');
+        'https://datosabiertos.navarra.es/es/api/3/action/datastore_search?resource_id=9323f68f-9c8f-47e1-884c-d6985b957606');
     final response = await get(url);
     final value = jsonDecode(response.body);
     setState(() {
@@ -37,8 +37,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        titleTextStyle:
-            const TextStyle(fontWeight: FontWeight.normal, fontSize: 22),
         title: const Align(
             alignment: Alignment.center, child: Text('Lista de Carreteras')),
       ),
@@ -47,6 +45,11 @@ class _HomeScreenState extends State<HomeScreen> {
               itemCount: response.length,
               itemBuilder: (context, index) {
                 return ListTile(
+                  shape: RoundedRectangleBorder(
+                    side:
+                        BorderSide(color: Colors.deepOrange.shade900, width: 1),
+                    borderRadius: BorderRadius.circular(5),
+                  ),
                   leading: const Icon(
                     Icons.remove_road,
                     size: 35,
