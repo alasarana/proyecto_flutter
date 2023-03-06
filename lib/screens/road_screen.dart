@@ -1,11 +1,25 @@
 import 'package:flutter/material.dart';
 
 import '../models/road.dart';
+import '../widgets/road_card.dart';
 
-class RoadScreen extends StatelessWidget {
+class RoadScreen extends StatefulWidget {
   final Road road;
-
   const RoadScreen({super.key, required this.road});
+
+  @override
+  State<RoadScreen> createState() => _RoadScreenState();
+}
+
+class _RoadScreenState extends State<RoadScreen> {
+  late final Road road;
+  bool isFav = false;
+
+  @override
+  void initState() {
+    super.initState();
+    road = widget.road;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -13,136 +27,12 @@ class RoadScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(road.carretera),
       ),
-      body: Card(
-        margin: const EdgeInsets.all(20.0),
-        elevation: 8,
-        child: Column(
-          children: [
-            Card(
-              elevation: 0.5,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(16, 5, 16, 5),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Expanded(child: Container()),
-                    Column(
-                      children: [
-                        const Text(
-                          "Tipo",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 17),
-                        ),
-                        Text(
-                          road.titulo,
-                          style: Theme.of(context).textTheme.labelLarge,
-                        )
-                      ],
-                    ),
-                    const Spacer(
-                      flex: 3,
-                    ),
-                    Column(
-                      children: [
-                        const Text(
-                          "Nivel",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 17),
-                        ),
-                        Text(
-                          road.gravedad,
-                          style: Theme.of(context)
-                              .textTheme
-                              .labelLarge
-                              ?.copyWith(color: Colors.orange[800]),
-                        )
-                      ],
-                    ),
-                    Expanded(child: Container()),
-                  ],
-                ),
-              ),
-            ),
-            Card(
-              elevation: 0,
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(28, 12, 28, 0),
-                    child: Row(children: [
-                      Flexible(
-                        child: Text(
-                          road.afeccion,
-                          style: Theme.of(context).textTheme.headlineMedium,
-                          maxLines: 2,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 30),
-                        child: Image.asset("assets/m30.png", scale: 4),
-                      ),
-                    ]),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(8, 0, 8, 12),
-                    child: Text(
-                      "Inicio: ${road.incidencia}",
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 16, 8, 0),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "Causa:",
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  road.tipo,
-                  style: Theme.of(context).textTheme.bodyLarge,
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 16, 8, 0),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "Detalles:",
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
-              child: Text(
-                road.detalles,
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-            ),
-            Expanded(child: Container()),
-            Align(
-              alignment: Alignment.bottomLeft,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(14, 8, 8, 12),
-                child: Text(
-                  "Última actualización: ${road.fecha}",
-                  style: Theme.of(context).textTheme.caption,
-                ),
-              ),
-            )
-          ],
-        ),
+      body: RoadCard(
+        road: road,
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => {},
+        child: Icon(isFav ? Icons.favorite : Icons.favorite_border),
       ),
     );
   }

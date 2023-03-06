@@ -1,33 +1,53 @@
-import 'dart:developer';
-
 class Road {
-  //TODO: Última actualización
+  final int id;
   final String carretera;
   final String titulo;
-  final String incidencia;
+  final String categoria;
+  final String ubicacion;
+  final String fecha;
   final String afeccion;
   final String tipo;
   final String detalles;
   final String gravedad;
-  final String fecha;
-  //TODO: Coordenadas
+  final String actualizacion;
+  final int coordX;
+  final int coordY;
+  final int pk;
 
-  Road(this.carretera, this.titulo, this.incidencia, this.afeccion, this.tipo,
-      this.detalles, this.gravedad, this.fecha);
+  Road(
+      this.id,
+      this.carretera,
+      this.titulo,
+      this.categoria,
+      this.ubicacion,
+      this.fecha,
+      this.afeccion,
+      this.tipo,
+      this.detalles,
+      this.gravedad,
+      this.actualizacion,
+      this.coordX,
+      this.coordY,
+      this.pk);
 
   static List<Road> fromApiResponse(dynamic apiResponse) {
     final List<Road> roads = [];
     for (final record in apiResponse['result']['records']) {
-      print(record['Carretera']);
       final road = Road(
+        record['_id'],
         record['Carretera'],
         record['Titulo'],
+        record['Categoria'],
+        record['Ubicacion'],
         record['Fecha_incidencia'],
         record['Afeccion'],
         record['Tipo'],
         record['Otros_datos'],
         record['Gravedad'],
         record['Ultima_actualizacion'],
+        record['Coord_X_en_EPSG_25830'],
+        record['Coord_Y_en_EPSG_25830'],
+        record['PK'],
       );
 
       roads.add(road);
