@@ -130,6 +130,14 @@ class RoadCard extends StatelessWidget {
             ),
           ),
           Expanded(child: Container()),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ActionChip(
+              avatar: const Icon(Icons.location_on),
+              label: const Text("Localización"),
+              onPressed: () => {},
+            ),
+          ),
           Align(
             alignment: Alignment.bottomLeft,
             child: Padding(
