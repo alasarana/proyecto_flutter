@@ -60,7 +60,9 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/m30.png
+    - assets/work_warn.webp
+    - assets/def_warn.webp
+    - assets/weath_warn.webp
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -5,11 +5,20 @@ class ErrorCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Card(
-        child: Padding(
-          padding: EdgeInsets.all(12.0),
-          child: Text("No se han podido cargar los datos"),
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(22.0),
+        child: Card(
+          elevation: 1,
+          child: SizedBox(
+            height: 100,
+            child: Align(
+                alignment: Alignment.center,
+                child: Text(
+                  "Error cargando los datos...",
+                  style: Theme.of(context).textTheme.bodyLarge,
+                )),
+          ),
         ),
       ),
     );

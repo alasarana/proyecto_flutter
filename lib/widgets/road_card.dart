@@ -14,7 +14,7 @@ class RoadCard extends StatelessWidget {
       child: Column(
         children: [
           Card(
-            elevation: 0.5,
+            elevation: 0.8,
             child: Padding(
               padding: const EdgeInsets.fromLTRB(16, 5, 16, 5),
               child: Row(
@@ -24,7 +24,7 @@ class RoadCard extends StatelessWidget {
                   Column(
                     children: [
                       const Text(
-                        "Tipo",
+                        "Estado",
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 17),
                       ),
@@ -58,34 +58,38 @@ class RoadCard extends StatelessWidget {
               ),
             ),
           ),
-          Card(
-            elevation: 0,
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(28, 12, 28, 0),
-                  child: Row(children: [
-                    Flexible(
-                      child: Text(
-                        road.afeccion,
-                        style: Theme.of(context).textTheme.headlineMedium,
-                        maxLines: 2,
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Card(
+              elevation: 0.3,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(28, 12, 28, 0),
+                    child: Row(children: [
+                      Flexible(
+                        child: Text(
+                          road.afeccion,
+                          style: Theme.of(context).textTheme.headlineMedium,
+                          maxLines: 2,
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 30),
-                      child: Image.asset("assets/m30.png", scale: 4),
-                    ),
-                  ]),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(8, 0, 8, 12),
-                  child: Text(
-                    "Inicio: ${road.fecha}",
-                    style: Theme.of(context).textTheme.bodySmall,
+                      Padding(
+                        padding: const EdgeInsets.only(left: 30),
+                        child: Image.asset(road.getImagePathForCategory(),
+                            scale: 4),
+                      ),
+                    ]),
                   ),
-                ),
-              ],
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "Inicio: ${road.fecha}",
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           Padding(

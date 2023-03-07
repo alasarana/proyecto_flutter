@@ -31,7 +31,11 @@ class _RoadScreenState extends State<RoadScreen> {
         road: road,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => {},
+        onPressed: () => {
+          setState(() {
+            isFav = !isFav;
+          })
+        },
         child: Icon(isFav ? Icons.favorite : Icons.favorite_border),
       ),
     );

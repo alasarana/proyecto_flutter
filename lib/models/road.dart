@@ -55,4 +55,13 @@ class Road {
 
     return roads;
   }
+
+  static final Map<String, String> categoryImagePath = {
+    'Meteorológicas': 'assets/weath_warn.webp',
+    'Obras': 'assets/work_warn.webp',
+  };
+
+  String getImagePathForCategory() {
+    return categoryImagePath[categoria] ?? 'assets/def_warn.webp';
+  }
 }
