@@ -93,22 +93,22 @@ class RoadCard extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(16, 16, 8, 0),
+            padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
             child: Align(
               alignment: Alignment.centerLeft,
-              child: Text(
-                "Causa:",
-                style: Theme.of(context).textTheme.bodySmall,
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                road.tipo,
-                style: Theme.of(context).textTheme.bodyLarge,
+              child: Wrap(
+                spacing: 16,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                children: [
+                  Text(
+                    "Causa:",
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  Text(
+                    road.tipo,
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  )
+                ],
               ),
             ),
           ),
