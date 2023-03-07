@@ -6,7 +6,6 @@ import 'package:proyecto_flutter/widgets/error_card.dart';
 import 'package:proyecto_flutter/widgets/list_tile.dart';
 
 import '../models/road.dart';
-import 'road_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -43,6 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: response.isNotEmpty
           ? ListView.separated(
+              //TODO: Ordenar con isFav
               padding: const EdgeInsets.all(18),
               itemCount: response.length,
               itemBuilder: (context, index) {
