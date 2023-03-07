@@ -84,6 +84,7 @@ class RoadCard extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
+                      //TODO: Parse fechas
                       "Inicio: ${road.fecha}",
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
@@ -135,6 +136,7 @@ class RoadCard extends StatelessWidget {
             child: ActionChip(
               avatar: const Icon(Icons.location_on),
               label: const Text("Localización"),
+              //TODO: Mapa
               onPressed: () => {},
             ),
           ),
