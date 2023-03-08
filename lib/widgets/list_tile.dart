@@ -24,7 +24,14 @@ class _RoadTileState extends State<RoadTile> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: isFav ? 8 : 1,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
+        side: isFav
+            ? BorderSide(
+                color: Theme.of(context).colorScheme.secondary, width: 0.8)
+            : BorderSide.none,
+      ),
+      elevation: isFav ? 8 : 2,
       child: ListTile(
         leading: const Icon(
           Icons.remove_road,

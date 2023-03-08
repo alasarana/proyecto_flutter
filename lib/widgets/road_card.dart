@@ -10,7 +10,7 @@ class RoadCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       margin: const EdgeInsets.all(20.0),
-      elevation: 8,
+      elevation: 2,
       child: Column(
         children: [
           Card(
