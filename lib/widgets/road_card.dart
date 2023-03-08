@@ -84,8 +84,7 @@ class RoadCard extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      //TODO: Parse fechas
-                      "Inicio: ${road.fecha}",
+                      "Inicio: ${formatedDate(road.fecha)}",
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                   ),
@@ -145,7 +144,7 @@ class RoadCard extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.fromLTRB(14, 8, 8, 12),
               child: Text(
-                "Última actualización: ${road.actualizacion}",
+                "Última actualización: ${formatedDate(road.actualizacion)}",
                 style: Theme.of(context).textTheme.caption,
               ),
             ),
@@ -153,5 +152,18 @@ class RoadCard extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  String formatedDate(String dateString) {
+    DateTime date = DateTime.parse(dateString);
+
+    String formattedDate = "${date.day.toString().padLeft(2, '0')}-"
+        "${date.month.toString().padLeft(2, '0')}-"
+        "${date.year.toString()} "
+        "${date.hour.toString().padLeft(2, '0')}:"
+        "${date.minute.toString().padLeft(2, '0')}:"
+        "${date.second.toString().padLeft(2, '0')}";
+
+    return formattedDate;
   }
 }

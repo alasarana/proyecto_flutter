@@ -18,8 +18,7 @@ class _RoadTileState extends State<RoadTile> {
   @override
   void initState() {
     super.initState();
-    //TODO: Base de datos
-    isFav = widget.road.carretera == "NA-2011";
+    isFav = widget.road.isFav();
   }
 
   @override

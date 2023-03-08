@@ -35,6 +35,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    response.sort((a, b) => b.isFav() ? 1 : 0);
+
     return Scaffold(
       appBar: AppBar(
         title: const Align(
@@ -42,7 +44,6 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: response.isNotEmpty
           ? ListView.separated(
-              //TODO: Ordenar con isFav
               padding: const EdgeInsets.all(18),
               itemCount: response.length,
               itemBuilder: (context, index) {

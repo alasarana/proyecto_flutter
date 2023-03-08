@@ -64,4 +64,9 @@ class Road {
   String getImagePathForCategory() {
     return categoryImagePath[categoria] ?? 'assets/def_warn.webp';
   }
+
+  bool isFav() {
+    //TODO: Implement this method
+    return carretera == "N-121" || carretera == "A-15";
+  }
 }
