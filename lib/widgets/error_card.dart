@@ -10,14 +10,22 @@ class ErrorCard extends StatelessWidget {
         padding: const EdgeInsets.all(22.0),
         child: Card(
           elevation: 1,
-          child: SizedBox(
-            height: 100,
-            child: Align(
+          child: Column(
+            children: [
+              Expanded(child: Container()),
+              Align(
                 alignment: Alignment.center,
                 child: Text(
-                  "Error cargando los datos...",
+                  "Cargando datos...",
                   style: Theme.of(context).textTheme.bodyLarge,
-                )),
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: CircularProgressIndicator(),
+              ),
+              Expanded(child: Container()),
+            ],
           ),
         ),
       ),
