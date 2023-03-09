@@ -77,12 +77,12 @@ class DatabaseHelper {
   }
 
   Future<void> setFavourite(id, bool isFavourite) async {
-    try {
-      await updateRoad({
-        columnId: id,
-        columnIsFavourite: isFavourite ? 1 : 0,
-      });
-    } catch (e) {
+    final rowsAffected = await updateRoad({
+      columnId: id,
+      columnIsFavourite: isFavourite ? 1 : 0,
+    });
+
+    if (rowsAffected == 0) {
       await insertRoad({
         columnId: id,
         columnIsFavourite: isFavourite ? 1 : 0,
