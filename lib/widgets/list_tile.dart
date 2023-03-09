@@ -4,9 +4,10 @@ import '../models/road.dart';
 import '../screens/road_screen.dart';
 
 class RoadTile extends StatefulWidget {
-  final Road road;
+  final Road road;  
+  final Function homeCallback;
 
-  const RoadTile({super.key, required this.road});
+  const RoadTile({super.key, required this.road, required this.homeCallback});
 
   @override
   State<RoadTile> createState() => _RoadTileState();
@@ -46,8 +47,8 @@ class _RoadTileState extends State<RoadTile> {
             MaterialPageRoute(
                 builder: (context) => RoadScreen(
                       road: widget.road,
-                    )),
-          );
+                ),
+              )).then((value) => widget.homeCallback());
         },
       ),
     );
