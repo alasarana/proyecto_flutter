@@ -13,7 +13,6 @@ class RoadScreen extends StatefulWidget {
 
 class _RoadScreenState extends State<RoadScreen> {
   late final Road road;
-  bool isFav = false;
 
   @override
   void initState() {
@@ -33,11 +32,10 @@ class _RoadScreenState extends State<RoadScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () => {
           setState(() {
-            isFav = !isFav;
+            road.setFav(!road.isFavourite);
           }),
-          road.setFav(isFav)
         },
-        child: Icon(isFav ? Icons.favorite : Icons.favorite_border),
+        child: Icon(road.isFavourite ? Icons.favorite : Icons.favorite_border),
       ),
     );
   }
