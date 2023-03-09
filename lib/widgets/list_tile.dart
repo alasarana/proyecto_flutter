@@ -3,52 +3,38 @@ import 'package:flutter/material.dart';
 import '../models/road.dart';
 import '../screens/road_screen.dart';
 
-class RoadTile extends StatefulWidget {
-  final Road road;  
+class RoadTile extends StatelessWidget {
+  final Road road;
   final Function homeCallback;
 
   const RoadTile({super.key, required this.road, required this.homeCallback});
-
-  @override
-  State<RoadTile> createState() => _RoadTileState();
-}
-
-class _RoadTileState extends State<RoadTile> {
-  late bool isFav;
-
-  @override
-  void initState() {
-    super.initState();
-    isFav = widget.road.isFavourite;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),
-        side: isFav
+        side: road.isFavourite
             ? BorderSide(
                 color: Theme.of(context).colorScheme.secondary, width: 0.8)
             : BorderSide.none,
       ),
-      elevation: isFav ? 8 : 2,
+      elevation: road.isFavourite ? 8 : 2,
       child: ListTile(
         leading: const Icon(
           Icons.remove_road,
           size: 35,
         ),
-        title: Text(widget.road.carretera,
+        title: Text(road.carretera,
             style: const TextStyle(fontWeight: FontWeight.bold)),
         trailing: const Icon(Icons.arrow_forward_ios),
         onTap: () {
           Navigator.push(
-            context,
-            MaterialPageRoute(
+              context,
+              MaterialPageRoute(
                 builder: (context) => RoadScreen(
-                      road: widget.road,
+                  road: road,
                 ),
-              )).then((value) => widget.homeCallback());
+              )).then((value) => homeCallback());
         },
       ),
     );
