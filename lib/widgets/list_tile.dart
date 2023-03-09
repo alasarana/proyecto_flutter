@@ -18,7 +18,7 @@ class _RoadTileState extends State<RoadTile> {
   @override
   void initState() {
     super.initState();
-    isFav = widget.road.isFav();
+    isFav = widget.road.isFavourite;
   }
 
   @override

@@ -1,3 +1,5 @@
+import '../db/database_helper.dart';
+
 class Road {
   final int id;
   final String carretera;
@@ -13,6 +15,7 @@ class Road {
   final int coordX;
   final int coordY;
   final int pk;
+  bool isFavourite = false;
 
   Road(
       this.id,
@@ -56,17 +59,17 @@ class Road {
     return roads;
   }
 
-  static final Map<String, String> categoryImagePath = {
+  final Map<String, String> _categoryImagePath = {
     'Meteorológicas': 'assets/weath_warn.webp',
     'Obras': 'assets/work_warn.webp',
   };
 
   String getImagePathForCategory() {
-    return categoryImagePath[categoria] ?? 'assets/def_warn.webp';
+    return _categoryImagePath[categoria] ?? 'assets/def_warn.webp';
   }
 
-  bool isFav() {
-    //TODO: Implement this method
-    return carretera == "N-121" || carretera == "A-15";
+  Future<void> setFav(bool isFavourite) async {
+    this.isFavourite = isFavourite;
+    await DatabaseHelper.instance.setFavourite(pk, isFavourite);
   }
 }

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:proyecto_flutter/db/database_helper.dart';
 import 'package:proyecto_flutter/widgets/error_card.dart';
 import 'package:proyecto_flutter/widgets/list_tile.dart';
 
@@ -15,7 +16,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<Road> response = [];
+  List<Road> roads = [];
 
   @override
   void initState() {
@@ -28,26 +29,32 @@ class _HomeScreenState extends State<HomeScreen> {
         'https://datosabiertos.navarra.es/es/api/3/action/datastore_search?resource_id=9323f68f-9c8f-47e1-884c-d6985b957606');
     final response = await get(url);
     final value = jsonDecode(response.body);
+    final roads = Road.fromApiResponse(value);
+    final favourites = await DatabaseHelper.instance.getFavourites();
+    for (final road in roads) {
+      road.isFavourite = favourites.contains(road.pk);
+    }
+
     setState(() {
-      this.response = Road.fromApiResponse(value);
+      this.roads = roads;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    response.sort((a, b) => b.isFav() ? 1 : 0);
+    roads.sort((a, b) => b.isFavourite ? 1 : 0);
 
     return Scaffold(
       appBar: AppBar(
         title: const Align(
             alignment: Alignment.center, child: Text('Lista de Carreteras')),
       ),
-      body: response.isNotEmpty
+      body: roads.isNotEmpty
           ? ListView.separated(
               padding: const EdgeInsets.all(18),
-              itemCount: response.length,
+              itemCount: roads.length,
               itemBuilder: (context, index) {
-                return RoadTile(road: response[index]);
+                return RoadTile(road: roads[index]);
               },
               separatorBuilder: (context, index) => const SizedBox(
                     height: 2,

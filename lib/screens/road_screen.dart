@@ -34,7 +34,8 @@ class _RoadScreenState extends State<RoadScreen> {
         onPressed: () => {
           setState(() {
             isFav = !isFav;
-          })
+          }),
+          road.setFav(isFav)
         },
         child: Icon(isFav ? Icons.favorite : Icons.favorite_border),
       ),
