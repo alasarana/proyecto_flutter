@@ -47,32 +47,28 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    roads.sort((a, b) => b.isFavourite ? 1 : 0);
-    print("Rendered");
+    roads.sort((a, b) => a.isFavourite == b.isFavourite
+        ? a.carretera.compareTo(b.carretera)
+        : a.isFavourite
+            ? -1
+            : 1);
 
     return Scaffold(
-        appBar: AppBar(
-          title: const Align(
-              alignment: Alignment.center, child: Text('Lista de Carreteras')),
-        ),
-        body: roads.isNotEmpty
-            ? ListView.separated(
-                padding: const EdgeInsets.all(18),
-                itemCount: roads.length,
-                itemBuilder: (context, index) {
-                  return RoadTile(
-                      road: roads[index], homeCallback: homeCallback);
-                },
-                separatorBuilder: (context, index) => const SizedBox(
-                      height: 2,
-                    ))
-            : const ErrorCard(),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () => {
-            for (final road in roads)
-              {if (road.isFavourite) print(road.carretera)},
-          },
-          child: const Icon(Icons.bug_report),
-        ));
+      appBar: AppBar(
+        title: const Align(
+            alignment: Alignment.center, child: Text('Lista de Carreteras')),
+      ),
+      body: roads.isNotEmpty
+          ? ListView.separated(
+              padding: const EdgeInsets.all(18),
+              itemCount: roads.length,
+              itemBuilder: (context, index) {
+                return RoadTile(road: roads[index], homeCallback: homeCallback);
+              },
+              separatorBuilder: (context, index) => const SizedBox(
+                    height: 2,
+                  ))
+          : const ErrorCard(),
+    );
   }
 }
