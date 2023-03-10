@@ -7,6 +7,7 @@ import 'package:proyecto_flutter/widgets/error_card.dart';
 import 'package:proyecto_flutter/widgets/list_tile.dart';
 
 import '../models/road.dart';
+import '../widgets/place_holder.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -47,6 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    roads = [];
     roads.sort((a, b) => a.isFavourite == b.isFavourite
         ? a.carretera.compareTo(b.carretera)
         : a.isFavourite
@@ -68,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
               separatorBuilder: (context, index) => const SizedBox(
                     height: 2,
                   ))
-          : const ErrorCard(),
+          : const PlaceHolder(),
     );
   }
 }
