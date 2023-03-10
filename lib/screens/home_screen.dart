@@ -48,7 +48,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    roads = [];
     roads.sort((a, b) => a.isFavourite == b.isFavourite
         ? a.carretera.compareTo(b.carretera)
         : a.isFavourite
@@ -56,21 +55,28 @@ class _HomeScreenState extends State<HomeScreen> {
             : 1);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Align(
-            alignment: Alignment.center, child: Text('Lista de Carreteras')),
-      ),
-      body: roads.isNotEmpty
-          ? ListView.separated(
-              padding: const EdgeInsets.all(18),
-              itemCount: roads.length,
-              itemBuilder: (context, index) {
-                return RoadTile(road: roads[index], homeCallback: homeCallback);
-              },
-              separatorBuilder: (context, index) => const SizedBox(
-                    height: 2,
-                  ))
-          : const PlaceHolder(),
-    );
+        appBar: AppBar(
+          title: const Align(
+              alignment: Alignment.center, child: Text('Lista de Carreteras')),
+        ),
+        body: roads.isNotEmpty
+            ? ListView.separated(
+                padding: const EdgeInsets.all(18),
+                itemCount: roads.length,
+                itemBuilder: (context, index) {
+                  return RoadTile(
+                      road: roads[index], homeCallback: homeCallback);
+                },
+                separatorBuilder: (context, index) => const SizedBox(
+                      height: 2,
+                    ))
+            : ListView.separated(
+                padding: const EdgeInsets.all(18),
+                itemCount: 8,
+                itemBuilder: (context, index) => const PlaceHolder(),
+                separatorBuilder: (context, index) => const SizedBox(
+                  height: 2,
+                ),
+              ));
   }
 }
