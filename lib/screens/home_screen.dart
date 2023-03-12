@@ -2,10 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'package:proyecto_flutter/db/database_helper.dart';
-import 'package:proyecto_flutter/widgets/error_card.dart';
-import 'package:proyecto_flutter/widgets/list_tile.dart';
-
+import '../db/database_helper.dart';
+import '../widgets/list_tile.dart';
 import '../models/road.dart';
 import '../widgets/place_holder.dart';
 
@@ -56,8 +54,21 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
         appBar: AppBar(
-          title: const Align(
-              alignment: Alignment.center, child: Text('Lista de Carreteras')),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                'assets/launcher_icon/foreground.png',
+                height: 70,
+                width: 70,
+              ),
+              Wrap(children: [
+                Text("RoadWatch",
+                    style: Theme.of(context).textTheme.titleLarge),
+                Text(" Navarra", style: Theme.of(context).textTheme.bodySmall),
+              ]),
+            ],
+          ),
         ),
         body: roads.isNotEmpty
             ? ListView.separated(
