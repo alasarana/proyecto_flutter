@@ -20,11 +20,11 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    initializeData();
+    _initializeData();
   }
 
   /// Solicita los datos de la API y los guarda en la lista de carreteras
-  void initializeData() async {
+  Future<void> _initializeData() async {
     final url = Uri.parse(
         'https://datosabiertos.navarra.es/es/api/3/action/datastore_search?resource_id=9323f68f-9c8f-47e1-884c-d6985b957606');
     final response = await get(url);
@@ -74,24 +74,21 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         // Si la lista de carreteras no está vacía, muestra la lista de carreteras
-        body: roads.isNotEmpty
-            ? ListView.separated(
-                padding: const EdgeInsets.all(18),
-                itemCount: roads.length,
-                itemBuilder: (context, index) {
+        body: RefreshIndicator(
+          onRefresh: _initializeData,
+          child: ListView.separated(
+              padding: const EdgeInsets.all(18),
+              itemCount: roads.isNotEmpty ? roads.length : 8,
+              itemBuilder: (context, index) {
+                if (roads.isNotEmpty) {
                   return RoadTile(
                       road: roads[index], homeCallback: homeCallback);
-                },
-                separatorBuilder: (context, index) => const SizedBox(
-                      height: 2,
-                    ))
-            : ListView.separated(
-                padding: const EdgeInsets.all(18),
-                itemCount: 8,
-                itemBuilder: (context, index) => const PlaceHolder(),
-                separatorBuilder: (context, index) => const SizedBox(
-                  height: 2,
-                ),
-              ));
+                }
+                return const PlaceHolder();
+              },
+              separatorBuilder: (context, index) => const SizedBox(
+                    height: 2,
+                  )),
+        ));
   }
 }
