@@ -32,6 +32,7 @@ class _RoadScreenState extends State<RoadScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () => {
           setState(() {
+            // Cambia el estado de favorito de la carretera
             road.setFav(!road.isFavourite);
           }),
         },

@@ -33,6 +33,7 @@ class Road {
       this.coordY,
       this.pk);
 
+  /// Convierte la respuesta de la API en una lista de objetos Road
   static List<Road> fromApiResponse(dynamic apiResponse) {
     final List<Road> roads = [];
     for (final record in apiResponse['result']['records']) {
@@ -68,6 +69,7 @@ class Road {
     return _categoryImagePath[categoria] ?? 'assets/def_warn.webp';
   }
 
+  /// Establece el estado de favorito de la carretera y lo guarda en la base de datos
   Future<void> setFav(bool isFavourite) async {
     this.isFavourite = isFavourite;
     await DatabaseHelper.instance.setFavourite(pk, isFavourite);

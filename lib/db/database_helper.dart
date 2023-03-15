@@ -19,12 +19,14 @@ class DatabaseHelper {
     return _database!;
   }
 
+  /// Inicializa la base de datos si no está creada
   _initDatabase() async {
     String path = join(await getDatabasesPath(), _databaseName);
     return await openDatabase(path,
         version: _databaseVersion, onCreate: _onCreate);
   }
 
+  /// Crea la tabla 'roads' si no existe
   Future _onCreate(Database db, int version) async {
     await db.execute('''
       CREATE TABLE $table (
@@ -65,6 +67,7 @@ class DatabaseHelper {
     return await db.delete(table, where: '$columnId = ?', whereArgs: [id]);
   }
 
+  /// Obtiene una lista de los ids de las carreteras favoritas
   Future<List<int>> getFavourites() async {
     final db = await DatabaseHelper.instance.database;
     final List<Map<String, dynamic>> result = await db.query(
@@ -76,6 +79,7 @@ class DatabaseHelper {
     return List<int>.from(result.map((e) => e[columnId]));
   }
 
+  /// Establece una carretera como favorita o no
   Future<void> setFavourite(id, bool isFavourite) async {
     final rowsAffected = await updateRoad({
       columnId: id,

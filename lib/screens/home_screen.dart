@@ -23,6 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
     initializeData();
   }
 
+  /// Solicita los datos de la API y los guarda en la lista de carreteras
   void initializeData() async {
     final url = Uri.parse(
         'https://datosabiertos.navarra.es/es/api/3/action/datastore_search?resource_id=9323f68f-9c8f-47e1-884c-d6985b957606');
@@ -40,12 +41,14 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  /// Permite actualizar la lista de carreteras cuando se añade o elimina una carretera de favoritos
   void homeCallback() {
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
+    // Ordena las carreteras: favoritas primero, luego por nombre
     roads.sort((a, b) => a.isFavourite == b.isFavourite
         ? a.carretera.compareTo(b.carretera)
         : a.isFavourite
@@ -70,6 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         ),
+        // Si la lista de carreteras no está vacía, muestra la lista de carreteras
         body: roads.isNotEmpty
             ? ListView.separated(
                 padding: const EdgeInsets.all(18),

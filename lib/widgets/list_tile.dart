@@ -34,6 +34,7 @@ class RoadTile extends StatelessWidget {
                 builder: (context) => RoadScreen(
                   road: road,
                 ),
+                // Permite actualizar la lista de carreteras cuando se añade o elimina una carretera de favoritos
               )).then((value) => homeCallback());
         },
       ),
