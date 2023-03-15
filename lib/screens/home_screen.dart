@@ -6,6 +6,7 @@ import '../db/database_helper.dart';
 import '../widgets/list_tile.dart';
 import '../models/road.dart';
 import '../widgets/place_holder.dart';
+import '../widgets/title.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -57,21 +58,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
         appBar: AppBar(
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                'assets/launcher_icon/foreground.png',
-                height: 70,
-                width: 70,
-              ),
-              Wrap(children: [
-                Text("RoadWatch",
-                    style: Theme.of(context).textTheme.titleLarge),
-                Text(" Navarra", style: Theme.of(context).textTheme.bodySmall),
-              ]),
-            ],
-          ),
+          leading: const SizedBox(width: 40, child: BackButton()),
+          title: const AppTitle(),
+          actions: const [
+            SizedBox(
+              width: 40,
+            )
+          ],
         ),
         // Si la lista de carreteras no está vacía, muestra la lista de carreteras
         body: RefreshIndicator(
