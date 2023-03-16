@@ -40,6 +40,7 @@ dependencies:
   path: ^1.8.2
   shimmer: ^2.0.0
   google_maps_flutter: ^2.2.5
+  proj4dart: ^2.1.0
 
 flutter_icons:
   android: "launcher_icon"

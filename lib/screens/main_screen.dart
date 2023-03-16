@@ -4,12 +4,14 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart';
+import 'package:proj4dart/proj4dart.dart';
 
 import '../db/database_helper.dart';
 import '../models/road.dart';
 import '../widgets/list_tile.dart';
 import '../widgets/place_holder.dart';
 import '../widgets/title.dart';
+import 'road_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -24,6 +26,7 @@ class _MainScreenState extends State<MainScreen> {
   final Completer<GoogleMapController> _controller = Completer();
   static const CameraPosition _initialPosition =
       CameraPosition(target: LatLng(42.6606511, -1.6226859), zoom: 8.2);
+  Set<Marker> _markers = {};
 
   @override
   void initState() {
@@ -43,6 +46,26 @@ class _MainScreenState extends State<MainScreen> {
     for (final road in roads) {
       road.isFavourite = favourites.contains(road.pk);
     }
+
+    _markers = roads
+        .map((road) => Marker(
+            markerId: MarkerId(road.pk.toString()),
+            position: convertEPSG25830ToLatLng(
+                road.coordX.toDouble(), road.coordY.toDouble()),
+            infoWindow: InfoWindow(
+                title: road.carretera,
+                snippet: road.gravedad,
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => RoadScreen(
+                          road: road,
+                        ),
+                        // Actualiza la lista de carreteras para mostrar cambios en favoritos
+                      )).then((value) => homeCallback());
+                })))
+        .toSet();
 
     // Ordena las carreteras: favoritas primero, luego por nombre
     roads.sort((a, b) => a.isFavourite == b.isFavourite
@@ -75,7 +98,8 @@ class _MainScreenState extends State<MainScreen> {
       ),
       body: _currentIndex == 0 ? buildMapScreen() : buildListScreen(),
       bottomNavigationBar: NavigationBar(
-        elevation: 5,
+        labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
+        elevation: 1,
         selectedIndex: _currentIndex,
         onDestinationSelected: _onItemTapped,
         destinations: const [
@@ -115,6 +139,17 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
+  /// Convierte las coordenadas a las adecuadas para Google Maps
+  LatLng convertEPSG25830ToLatLng(double x, double y) {
+    final sourceCRS = Projection.parse(
+        'PROJCS["ETRS89 / UTM zone 30N",GEOGCS["ETRS89",DATUM["European_Terrestrial_Reference_System_1989",SPHEROID["GRS 1980",6378137,298.257222101,AUTHORITY["EPSG","7019"]],AUTHORITY["EPSG","6258"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],AUTHORITY["EPSG","4258"]],PROJECTION["Transverse_Mercator"],PARAMETER["latitude_of_origin",0],PARAMETER["central_meridian",-3],PARAMETER["scale_factor",0.9996],PARAMETER["false_easting",500000],PARAMETER["false_northing",0],UNIT["metre",1,AUTHORITY["EPSG","9001"]],AXIS["Easting",EAST],AXIS["Northing",NORTH],AUTHORITY["EPSG","25830"]]');
+    final targetCRS = Projection.get('EPSG:4326');
+    final point = Point(x: x, y: y);
+    final transformedPoint = sourceCRS.transform(targetCRS!, point);
+
+    return LatLng(transformedPoint.y, transformedPoint.x);
+  }
+
   Widget buildMapScreen() {
     return GoogleMap(
       initialCameraPosition: _initialPosition,
@@ -124,8 +159,8 @@ class _MainScreenState extends State<MainScreen> {
           _controller.complete(controller);
         }
       },
-      myLocationEnabled: true,
-      myLocationButtonEnabled: true,
+      zoomControlsEnabled: false,
+      markers: _markers,
     );
   }
 }
