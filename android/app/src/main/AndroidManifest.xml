@@ -5,6 +5,12 @@
         android:label="RoadWatch Navarra"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
+
+        <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyCglGHIZxm1yPzOb1NmS8s5zwJFtNnJIyo"/>
+               <!-- Release: AIzaSyDbCmoDjTdBzAsQnTXghZOjVZYmtsD7ZMo -->
+                <!-- Debug: AIzaSyCglGHIZxm1yPzOb1NmS8s5zwJFtNnJIyo -->
+               
         <activity
             android:name=".MainActivity"
             android:exported="true"

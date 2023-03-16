@@ -39,6 +39,7 @@ dependencies:
   sqflite: ^2.2.5
   path: ^1.8.2
   shimmer: ^2.0.0
+  google_maps_flutter: ^2.2.5
 
 flutter_icons:
   android: "launcher_icon"

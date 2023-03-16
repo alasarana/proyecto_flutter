@@ -1,6 +1,8 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart';
 
 import '../db/database_helper.dart';
@@ -19,6 +21,9 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
   List<Road> roads = [];
+  final Completer<GoogleMapController> _controller = Completer();
+  static const CameraPosition _initialPosition =
+      CameraPosition(target: LatLng(42.6606511, -1.6226859), zoom: 8.2);
 
   @override
   void initState() {
@@ -70,6 +75,7 @@ class _MainScreenState extends State<MainScreen> {
       ),
       body: _currentIndex == 0 ? buildMapScreen() : buildListScreen(),
       bottomNavigationBar: NavigationBar(
+        elevation: 5,
         selectedIndex: _currentIndex,
         onDestinationSelected: _onItemTapped,
         destinations: const [
@@ -110,6 +116,16 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   Widget buildMapScreen() {
-    return const Text('Mapa');
+    return GoogleMap(
+      initialCameraPosition: _initialPosition,
+      mapType: MapType.normal,
+      onMapCreated: (GoogleMapController controller) {
+        if (!_controller.isCompleted) {
+          _controller.complete(controller);
+        }
+      },
+      myLocationEnabled: true,
+      myLocationButtonEnabled: true,
+    );
   }
 }
