@@ -5,7 +5,7 @@ import '../screens/road_screen.dart';
 
 class RoadTile extends StatelessWidget {
   final Road road;
-  final Function homeCallback;
+  final VoidCallback homeCallback;
 
   const RoadTile({super.key, required this.road, required this.homeCallback});
   @override

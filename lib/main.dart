@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:roadwatch_navarra/screens/main_screen.dart';
 import 'app_theme.dart';
-import 'screens/home_screen.dart';
-import 'screens/map_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,7 +22,7 @@ class MyApp extends StatelessWidget {
       title: 'Lista de carreteras',
       theme: AppTheme.lightTheme(),
       darkTheme: AppTheme.darkTheme(),
-      home: const MapScreen(),
+      home: const MainScreen(),
     );
   }
 }
