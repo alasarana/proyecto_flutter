@@ -7,7 +7,7 @@
         android:icon="@mipmap/launcher_icon">
 
         <meta-data android:name="com.google.android.geo.API_KEY"
-               android:value="AIzaSyCglGHIZxm1yPzOb1NmS8s5zwJFtNnJIyo"/>
+               android:value="AIzaSyDbCmoDjTdBzAsQnTXghZOjVZYmtsD7ZMo"/>
                <!-- Release: AIzaSyDbCmoDjTdBzAsQnTXghZOjVZYmtsD7ZMo -->
                 <!-- Debug: AIzaSyCglGHIZxm1yPzOb1NmS8s5zwJFtNnJIyo -->
                

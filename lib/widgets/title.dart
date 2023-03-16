@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class AppTitle extends StatelessWidget {
-  const AppTitle({super.key});
+  final bool isHome;
+
+  const AppTitle({super.key, required this.isHome});
 
   @override
   Widget build(BuildContext context) {

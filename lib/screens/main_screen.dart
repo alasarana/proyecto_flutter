@@ -4,9 +4,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart';
-import 'package:proj4dart/proj4dart.dart';
 
 import '../db/database_helper.dart';
+import '../map_tools.dart';
 import '../models/road.dart';
 import '../widgets/list_tile.dart';
 import '../widgets/place_holder.dart';
@@ -47,6 +47,8 @@ class _MainScreenState extends State<MainScreen> {
       road.isFavourite = favourites.contains(road.pk);
     }
 
+    _initializeMapController();
+    // Muestra los marcadores en el mapa
     _markers = roads
         .map((road) => Marker(
             markerId: MarkerId(road.pk.toString()),
@@ -67,13 +69,6 @@ class _MainScreenState extends State<MainScreen> {
                 })))
         .toSet();
 
-    // Ordena las carreteras: favoritas primero, luego por nombre
-    roads.sort((a, b) => a.isFavourite == b.isFavourite
-        ? a.carretera.compareTo(b.carretera)
-        : a.isFavourite
-            ? -1
-            : 1);
-
     setState(() {
       this.roads = roads;
     });
@@ -92,10 +87,18 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Ordena las carreteras: favoritas primero, luego por nombre
+    roads.sort((a, b) => a.isFavourite == b.isFavourite
+        ? a.carretera.compareTo(b.carretera)
+        : a.isFavourite
+            ? -1
+            : 1);
+
     return Scaffold(
       appBar: AppBar(
-        title: const AppTitle(),
+        title: AppTitle(isHome: _currentIndex == 0),
       ),
+      // Muestra el mapa o la lista de carreteras dependiendo de la pestaña seleccionada
       body: _currentIndex == 0 ? buildMapScreen() : buildListScreen(),
       bottomNavigationBar: NavigationBar(
         labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
@@ -128,7 +131,10 @@ class _MainScreenState extends State<MainScreen> {
             itemCount: roads.isNotEmpty ? roads.length : 8,
             itemBuilder: (context, index) {
               if (roads.isNotEmpty) {
-                return RoadTile(road: roads[index], homeCallback: homeCallback);
+                return RoadTile(
+                  road: roads[index],
+                  homeCallback: homeCallback,
+                );
               }
               return const PlaceHolder();
             },
@@ -139,26 +145,14 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
-  /// Convierte las coordenadas a las adecuadas para Google Maps
-  LatLng convertEPSG25830ToLatLng(double x, double y) {
-    final sourceCRS = Projection.parse(
-        'PROJCS["ETRS89 / UTM zone 30N",GEOGCS["ETRS89",DATUM["European_Terrestrial_Reference_System_1989",SPHEROID["GRS 1980",6378137,298.257222101,AUTHORITY["EPSG","7019"]],AUTHORITY["EPSG","6258"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],AUTHORITY["EPSG","4258"]],PROJECTION["Transverse_Mercator"],PARAMETER["latitude_of_origin",0],PARAMETER["central_meridian",-3],PARAMETER["scale_factor",0.9996],PARAMETER["false_easting",500000],PARAMETER["false_northing",0],UNIT["metre",1,AUTHORITY["EPSG","9001"]],AXIS["Easting",EAST],AXIS["Northing",NORTH],AUTHORITY["EPSG","25830"]]');
-    final targetCRS = Projection.get('EPSG:4326');
-    final point = Point(x: x, y: y);
-    final transformedPoint = sourceCRS.transform(targetCRS!, point);
-
-    return LatLng(transformedPoint.y, transformedPoint.x);
+  void _initializeMapController() {
+    MapController().setController(_controller);
   }
 
   Widget buildMapScreen() {
     return GoogleMap(
       initialCameraPosition: _initialPosition,
       mapType: MapType.normal,
-      onMapCreated: (GoogleMapController controller) {
-        if (!_controller.isCompleted) {
-          _controller.complete(controller);
-        }
-      },
       zoomControlsEnabled: false,
       markers: _markers,
     );

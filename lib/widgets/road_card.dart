@@ -130,22 +130,13 @@ class RoadCard extends StatelessWidget {
             ),
           ),
           Expanded(child: Container()),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ActionChip(
-              avatar: const Icon(Icons.location_on),
-              label: const Text("Localización"),
-              //TODO: Mapa
-              onPressed: () => {},
-            ),
-          ),
           Align(
             alignment: Alignment.bottomLeft,
             child: Padding(
               padding: const EdgeInsets.fromLTRB(14, 8, 8, 12),
               child: Text(
                 "Última actualización: ${formatedDate(road.actualizacion)}",
-                style: Theme.of(context).textTheme.caption,
+                style: Theme.of(context).textTheme.bodySmall,
               ),
             ),
           )
